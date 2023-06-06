@@ -13,5 +13,10 @@ namespace GestionsEcole
 
         public int Id_matiere { get => id_matiere; set => id_matiere = value; }
         public string Nom { get => nom; set => nom = value; }
+
+        public override string ToString()
+        {
+            return this.Nom;
+        }
     }
 }

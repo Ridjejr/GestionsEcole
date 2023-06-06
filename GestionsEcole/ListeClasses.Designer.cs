@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgv_ListeClasses = new System.Windows.Forms.DataGridView();
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.btn_Afficher = new System.Windows.Forms.Button();
             this.btn_Modifier = new System.Windows.Forms.Button();
             this.btn_Supprimer = new System.Windows.Forms.Button();
             this.btn_Nouveau = new System.Windows.Forms.Button();
-            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.id_classe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.niveau = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_prof = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LeProfesseur = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_ListeClasses)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             this.SuspendLayout();
@@ -51,11 +51,12 @@
             this.dgv_ListeClasses.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id_classe,
             this.niveau,
-            this.id_prof});
+            this.LeProfesseur});
             this.dgv_ListeClasses.DataSource = this.bs;
             this.dgv_ListeClasses.Location = new System.Drawing.Point(12, 12);
             this.dgv_ListeClasses.Name = "dgv_ListeClasses";
             this.dgv_ListeClasses.ReadOnly = true;
+            this.dgv_ListeClasses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_ListeClasses.Size = new System.Drawing.Size(345, 324);
             this.dgv_ListeClasses.TabIndex = 0;
             // 
@@ -113,12 +114,12 @@
             this.niveau.Name = "niveau";
             this.niveau.ReadOnly = true;
             // 
-            // id_prof
+            // LeProfesseur
             // 
-            this.id_prof.DataPropertyName = "id_prof_principal";
-            this.id_prof.HeaderText = "Prof principal";
-            this.id_prof.Name = "id_prof";
-            this.id_prof.ReadOnly = true;
+            this.LeProfesseur.DataPropertyName = "leProfesseur";
+            this.LeProfesseur.HeaderText = "Prof principal";
+            this.LeProfesseur.Name = "LeProfesseur";
+            this.LeProfesseur.ReadOnly = true;
             // 
             // Form_ListeClasses
             // 
@@ -148,6 +149,6 @@
         private System.Windows.Forms.BindingSource bs;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_classe;
         private System.Windows.Forms.DataGridViewTextBoxColumn niveau;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_prof;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LeProfesseur;
     }
 }

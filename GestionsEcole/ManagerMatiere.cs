@@ -18,16 +18,29 @@ namespace GestionsEcole
             return unMatiere;
         }
 
-        public static List<Matiere> DonneMatieres()
+        public static List<Matiere> DonneMatieres(bool orderByNom = false)
         {
             List<Matiere> lesMatieres = new List<Matiere>();
 
             MySqlCommand maRequete;
-            MySqlDataReader monReader;
-            Connection.MaConnection.Open();   // Ouvre la connection
+            MySqlDataReader monReader; // Element lu de la requête
             maRequete = Connection.MaConnection.CreateCommand(); // declaration d'une requête 
-            maRequete.CommandText = "select * from Matiere order by id_matiere";
+
+            Connection.OpenConnection(); // Ouvre la connexion 
+            maRequete = Connection.MaConnection.CreateCommand();
+
+            if (orderByNom)
+            {
+                maRequete.CommandText = "SELECT * FROM Matiere ORDER BY nom"; // Trié par nom
+            }
+            else
+            {
+                maRequete.CommandText = "SELECT * FROM Matiere ORDER BY id_matiere"; // Trié par num
+            }
+
+            //maRequete.CommandText = "select * from Matiere order by id_matiere";
             monReader = maRequete.ExecuteReader();  // execution de la requête
+
             while (monReader.Read())
             {
                 Matiere unMatiere = ManagerMatiere.DonneMatiereDuReader(monReader);
@@ -35,14 +48,27 @@ namespace GestionsEcole
             }
             monReader.Close();
             Connection.MaConnection.Close();
-            return lesMatieres;
 
+            return lesMatieres;
         }
 
         public static Matiere DonneMatiereParId(int id)
         {
-            Matiere unMatiere = new Matiere();
-            return unMatiere;
+            MySqlConnection connection = Connection.NewConnection();
+            MySqlCommand maRequete = connection.CreateCommand();
+            MySqlDataReader monReader; // Element lu de la requête
+
+            maRequete.CommandText = "select * from Matiere " +
+                "where id_matiere=@paramId_matiere";
+
+            maRequete.Parameters.AddWithValue("@paramId_matiere", id);
+            connection.Open();
+            monReader = maRequete.ExecuteReader();
+            monReader.Read();
+            Matiere unAuteur = DonneMatiereDuReader(monReader);
+            connection.Close();
+
+            return unAuteur;
         }
 
         public static bool ModifierMatiere(Matiere e)

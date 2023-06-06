@@ -20,44 +20,91 @@ namespace GestionsEcole
             return unProfesseur;
         }
 
-        public static List<Professeur> DonneProfesseurs()
+        public static List<Professeur> DonneProfesseurs(bool orderByNom = false)
         {
             List<Professeur> lesProfesseurs = new List<Professeur>();
 
             MySqlCommand maRequete;
             MySqlDataReader monReader;
+
             Connection.MaConnection.Open();   // Ouvre la connection
             maRequete = Connection.MaConnection.CreateCommand(); // declaration d'une requête 
-            maRequete.CommandText = "select * from Professeur order by Nom, Prenom";
+
+            if (orderByNom)
+            {
+                maRequete.CommandText = "SELECT * FROM ¨Professeur ORDER BY Nom"; // Trié par nom
+            }
+            else
+            {
+                maRequete.CommandText = "SELECT * FROM Professeur ORDER BY id_prof"; // Trié par identifiant
+            }
+
+            //maRequete.CommandText = "select * from Professeur order by Nom, Prenom";
             monReader = maRequete.ExecuteReader();  // execution de la requête
+
             while (monReader.Read())
             {
                 Professeur unProfesseur = ManagerProfesseur.DonneProfesseurDuReader(monReader);
                 lesProfesseurs.Add(unProfesseur);
             }
+
             monReader.Close();
             Connection.MaConnection.Close();
+
             return lesProfesseurs;
 
         }
 
         public static Professeur DonneProfesseurParId(int id)
         {
-            Professeur unProfesseur = new Professeur();
+            MySqlConnection connection = Connection.NewConnection();
+            MySqlCommand maRequete = connection.CreateCommand();
+            MySqlDataReader monReader; // Element lu de la requête
+
+            maRequete.CommandText = "select * from Professeur " +
+                "where id_prof=@paramId_prof";
+
+            maRequete.Parameters.AddWithValue("@paramId_prof", id);
+            connection.Open();
+            monReader = maRequete.ExecuteReader();
+            monReader.Read();
+            Professeur unProfesseur = DonneProfesseurDuReader(monReader);
+            connection.Close();
+
             return unProfesseur;
         }
 
         public static bool ModifierProfesseur(Professeur e)
         {
-            bool resulat = true;
-            return resulat;
+            MySqlCommand maRequete = Connection.MaConnection.CreateCommand();
+            bool reponse = false;
+
+            maRequete.CommandText = "update Professeur set " +
+                "Nom=@paramNom, Prenom=@paramPrenom, sexe=@paramSexe where id_prof=@paramId_prof";
+
+            maRequete.Parameters.Clear();
+            maRequete.Parameters.AddWithValue("@paramNom", e.Nom);
+            maRequete.Parameters.AddWithValue("@paramPrenom", e.Prenom);
+            maRequete.Parameters.AddWithValue("@paramSexe", e.Sexe);
+            maRequete.Parameters.AddWithValue("@paramId_prof", e.Id_prof);
+
+            Connection.MaConnection.Open();
+            int result = maRequete.ExecuteNonQuery();
+            Connection.MaConnection.Close();
+
+            if (result > 0)
+            {
+                reponse = true;
+            }
+
+            return reponse;
         }
 
         public static bool AjouterProfesseur(Professeur e)
         {
             MySqlCommand maRequete = Connection.MaConnection.CreateCommand();
             bool reponse = false;
-            maRequete.CommandText = "insert into Professeur set " +
+            maRequete.CommandText = "insert into Professeur (Nom, Prenom, Sexe)" +
                     "Nom=@paramNom, Prenom=@paramPrenom, Sexe=@paramSexe where id_prof=@paramId_prof";
             maRequete.Parameters.Clear();  //annule tous les anciens paramètres
 
@@ -65,7 +112,7 @@ namespace GestionsEcole
             maRequete.Parameters.AddWithValue("@paramNom", e.Nom);
             maRequete.Parameters.AddWithValue("@paramPrenom", e.Prenom);
             maRequete.Parameters.AddWithValue("@paramSexe", e.Sexe);
-            maRequete.Parameters.AddWithValue("@paramId_prof", e.Id_prof);
+            //maRequete.Parameters.AddWithValue("@paramId_prof", e.Id_prof);
             try
             {
                 Connection.MaConnection.Open();

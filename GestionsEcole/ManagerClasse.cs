@@ -14,8 +14,13 @@ namespace GestionsEcole
         public static Classe DonneClasseDuReader(MySqlDataReader monReader) // element dans la base de données 
         {
             Classe uneClasse = new Classe();
+
             uneClasse.Id_classe = Convert.ToInt16(monReader["id_Classe"]);
+
+            // Si le niveau est null, mettre chaine de caractère vide, sinon mettre le niveau 
             uneClasse.Niveau = monReader["niveau"] == DBNull.Value ? "" : monReader["niveau"] as string;
+            uneClasse.LeProfesseur = ManagerProfesseur.DonneProfesseurParId(Convert.ToInt16(monReader["id_prof"]));
+            
             return uneClasse;
         }
 
@@ -29,13 +34,16 @@ namespace GestionsEcole
             maRequete = Connection.MaConnection.CreateCommand(); // declaration d'une requête 
             maRequete.CommandText = "select * from Classe order by id_classe";
             monReader = maRequete.ExecuteReader();  // execution de la requête
+
             while (monReader.Read())
             {
                 Classe uneClasse = ManagerClasse.DonneClasseDuReader(monReader);
                 lesClasses.Add(uneClasse);
             }
+
             monReader.Close();
             Connection.MaConnection.Close();
+
             return lesClasses;
 
         }
@@ -48,41 +56,52 @@ namespace GestionsEcole
 
         public static bool ModifierClasse(Classe e)
         {
-            bool resulat = true;
-            return resulat;
+            MySqlCommand maRequete = Connection.MaConnection.CreateCommand();
+            bool reponse = false;
+
+            maRequete.CommandText = "update Classe set " +
+                "Niveau=@paramNiveau, id_prof=@paramProfesseur where id_Classe=@paramId_Classe";
+
+            maRequete.Parameters.Clear();
+            maRequete.Parameters.AddWithValue("@paramNiveau", e.Niveau);
+            maRequete.Parameters.AddWithValue("@paramProfesseur", e.LeProfesseur.Id_prof);
+            maRequete.Parameters.AddWithValue("@paramId_Classe", e.Id_classe);
+
+            Connection.MaConnection.Open();
+            int result = maRequete.ExecuteNonQuery();
+            Connection.MaConnection.Close();
+
+            if (result > 0)
+            {
+                reponse = true;
+            }
+
+            return reponse;
         }
 
         public static bool AjouterClasse(Classe e)
         {
             MySqlCommand maRequete = Connection.MaConnection.CreateCommand();
             bool reponse = false;
-            maRequete.CommandText = "insert into Classe set " +
-                    "Niveau=@paramNiveau where id_Classe=@paramId_Classe";
-            maRequete.Parameters.Clear();  //annule tous les anciens paramètres
 
-            //ajoute les paramètres de la requête de modification
-            maRequete.Parameters.AddWithValue("@paramNiveau", e.Niveau);;
-            maRequete.Parameters.AddWithValue("@paramId_Classe", e.Id_classe);
-            try
-            {
-                Connection.MaConnection.Open();
-                int resultat = maRequete.ExecuteNonQuery();
-                Connection.MaConnection.Close();
-                if (resultat > 0)
-                {
-                    reponse = true;
-                    return reponse;
-                }
-                else
-                {
-                    throw new Exception("Une erreur s'est produite, la classe n'a pas été mis à jour. ");
-                }
+            maRequete.CommandText = "insert into Classe (Niveau, id_prof) " +
+                "VALUES(@paramNiveau, @paramProfesseur)";
 
-            }
-            catch (Exception ex)
+            maRequete.Parameters.Clear();
+            maRequete.Parameters.AddWithValue("@paramNiveau", e.Niveau);
+            maRequete.Parameters.AddWithValue("@paramProfesseur", e.LeProfesseur.Id_prof);
+            //maRequete.Parameters.AddWithValue("@paramId_Classe", e.Id_classe);
+
+            Connection.MaConnection.Open();
+            int result = maRequete.ExecuteNonQuery();
+            Connection.MaConnection.Close();
+
+            if (result > 0)
             {
-                throw new Exception(ex.Message);
+                reponse = true;
             }
+
+            return reponse;
 
         }
 
@@ -119,5 +138,6 @@ namespace GestionsEcole
                 throw new Exception(ex.Message);
             }
         }
+
     }
 }

@@ -20,7 +20,7 @@ namespace GestionsEcole
             return unEleve;
         }
 
-        public static List<Eleve>   DonneEleves()
+        public static List<Eleve> DonneEleves(bool orderByNom = false)
         {
             List<Eleve> lesEleves = new List<Eleve>();
 
@@ -28,8 +28,19 @@ namespace GestionsEcole
             MySqlDataReader monReader;
             Connection.MaConnection.Open();   // Ouvre la connection
             maRequete = Connection.MaConnection.CreateCommand(); // declaration d'une requête 
-            maRequete.CommandText = "select * from Eleve order by Nom, Prenom";
+
+            if (orderByNom)
+            {
+                maRequete.CommandText = "SELECT * FROM Eleve ORDER BY nom"; // Trié par nom
+            }
+            else
+            {
+                maRequete.CommandText = "SELECT * FROM Eleve ORDER BY id_eleve"; // Trié par num
+            }
+
+            //maRequete.CommandText = "select * from Eleve order by Nom, Prenom";
             monReader = maRequete.ExecuteReader();  // execution de la requête
+
             while (monReader.Read())
             {
                 Eleve unEleve = ManagerEleve.DonneEleveDuReader(monReader);
@@ -37,13 +48,25 @@ namespace GestionsEcole
             }
             monReader.Close();
             Connection.MaConnection.Close();
+
             return lesEleves;
 
         }
 
         public static Eleve DonneEleveParId(int id)
         {
-            Eleve unEleve = new Eleve();
+            MySqlConnection connection = Connection.NewConnection();
+            MySqlCommand maRequete = connection.CreateCommand();
+            MySqlDataReader monReader; // Element lu de la requête
+
+            maRequete.CommandText = "select * from Eleve where id_eleve=@paramId_eleve";
+            maRequete.Parameters.AddWithValue("@paramId_eleve", id);
+            connection.Open();
+            monReader = maRequete.ExecuteReader();
+            monReader.Read();
+            Eleve unEleve = DonneEleveDuReader(monReader);
+            connection.Close();
+
             return unEleve;
         }
 

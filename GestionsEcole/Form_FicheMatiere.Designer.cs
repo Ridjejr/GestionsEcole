@@ -41,6 +41,7 @@
             // 
             // text_Id_matiere
             // 
+            this.text_Id_matiere.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bs, "Id_matiere", true));
             this.text_Id_matiere.Enabled = false;
             this.text_Id_matiere.Location = new System.Drawing.Point(157, 47);
             this.text_Id_matiere.Name = "text_Id_matiere";
@@ -49,6 +50,7 @@
             // 
             // text_Nom
             // 
+            this.text_Nom.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bs, "Nom", true));
             this.text_Nom.Location = new System.Drawing.Point(157, 106);
             this.text_Nom.Name = "text_Nom";
             this.text_Nom.Size = new System.Drawing.Size(111, 20);
@@ -91,6 +93,10 @@
             this.btn_Valider.Text = "Valider";
             this.btn_Valider.UseVisualStyleBackColor = true;
             this.btn_Valider.Click += new System.EventHandler(this.btn_Valider_Click);
+            // 
+            // bs
+            // 
+            this.bs.DataSource = typeof(GestionsEcole.Matiere);
             // 
             // Form_FicheMatiere
             // 

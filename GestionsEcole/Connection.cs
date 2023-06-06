@@ -13,5 +13,38 @@ namespace GestionsEcole
         private static MySqlConnection maConnection= new MySqlConnection(connectionString);
 
         public static MySqlConnection MaConnection { get => maConnection; }
+
+        public static MySqlConnection NewConnection()
+        {
+            return new MySqlConnection(connectionString);
+        }
+
+        public static bool OpenConnection()
+        {
+            try
+            {
+                MaConnection.Open();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CloseConnection()
+        {
+            try
+            {
+                MaConnection.Close();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

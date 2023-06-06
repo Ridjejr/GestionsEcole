@@ -33,11 +33,7 @@ namespace GestionsEcole
             }
             catch (Exception ex)
             {
-                MessageBox.Show("erreur :" + ex.Message);
-            }
-            finally
-            {
-
+                MessageBox.Show("Erreur : " + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -81,5 +77,6 @@ namespace GestionsEcole
             frm.ShowDialog();
             RemplirListe();
         }
+
     }
 }

@@ -45,5 +45,17 @@ namespace GestionsEcole
             Form_ListeMatieres frm = new Form_ListeMatieres();
             frm.Show();
         }
+
+        private void notesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_listeNotes frm = new Form_listeNotes();
+            frm.Show();
+        }
+
+        private void enseignantToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_listeEnseigner frm = new Form_listeEnseigner();
+            frm.Show();
+        }
     }
 }

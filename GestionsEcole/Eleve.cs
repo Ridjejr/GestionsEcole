@@ -17,5 +17,10 @@ namespace GestionsEcole
         public string Nom { get => nom; set => nom = value; }
         public string Prenom { get => prenom; set => prenom = value; }
         public string Sexe { get => sexe; set => sexe = value; }
+
+        public override string ToString()
+        {
+            return this.Nom + " " + this.Prenom;
+        }
     }
 }

@@ -36,6 +36,7 @@
             this.notesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.professeursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.matièreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enseignantToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +65,8 @@
             this.classesToolStripMenuItem,
             this.notesToolStripMenuItem,
             this.professeursToolStripMenuItem,
-            this.matièreToolStripMenuItem});
+            this.matièreToolStripMenuItem,
+            this.enseignantToolStripMenuItem});
             this.basesToolStripMenuItem.Name = "basesToolStripMenuItem";
             this.basesToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.basesToolStripMenuItem.Text = "Bases";
@@ -88,6 +90,7 @@
             this.notesToolStripMenuItem.Name = "notesToolStripMenuItem";
             this.notesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.notesToolStripMenuItem.Text = "Notes";
+            this.notesToolStripMenuItem.Click += new System.EventHandler(this.notesToolStripMenuItem_Click);
             // 
             // professeursToolStripMenuItem
             // 
@@ -102,6 +105,13 @@
             this.matièreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.matièreToolStripMenuItem.Text = "Matière";
             this.matièreToolStripMenuItem.Click += new System.EventHandler(this.matièreToolStripMenuItem_Click);
+            // 
+            // enseignantToolStripMenuItem
+            // 
+            this.enseignantToolStripMenuItem.Name = "enseignantToolStripMenuItem";
+            this.enseignantToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enseignantToolStripMenuItem.Text = "Enseignant";
+            this.enseignantToolStripMenuItem.Click += new System.EventHandler(this.enseignantToolStripMenuItem_Click);
             // 
             // Menu
             // 
@@ -129,5 +139,6 @@
         private System.Windows.Forms.ToolStripMenuItem notesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem professeursToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem matièreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enseignantToolStripMenuItem;
     }
 }

@@ -30,13 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgv_ListeMatieres = new System.Windows.Forms.DataGridView();
-            this.id_matiere = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Matiere = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_Afficher = new System.Windows.Forms.Button();
             this.btn_Modifier = new System.Windows.Forms.Button();
             this.btn_Supprimer = new System.Windows.Forms.Button();
             this.btn_Nouveau = new System.Windows.Forms.Button();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
+            this.id_matiere = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Matiere = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_ListeMatieres)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             this.SuspendLayout();
@@ -54,21 +54,9 @@
             this.dgv_ListeMatieres.Location = new System.Drawing.Point(12, 12);
             this.dgv_ListeMatieres.Name = "dgv_ListeMatieres";
             this.dgv_ListeMatieres.ReadOnly = true;
-            this.dgv_ListeMatieres.Size = new System.Drawing.Size(272, 257);
+            this.dgv_ListeMatieres.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_ListeMatieres.Size = new System.Drawing.Size(294, 249);
             this.dgv_ListeMatieres.TabIndex = 0;
-            // 
-            // id_matiere
-            // 
-            this.id_matiere.HeaderText = "Identifiant";
-            this.id_matiere.Name = "id_matiere";
-            this.id_matiere.ReadOnly = true;
-            // 
-            // Matiere
-            // 
-            this.Matiere.HeaderText = "Matière";
-            this.Matiere.Name = "Matiere";
-            this.Matiere.ReadOnly = true;
-            this.Matiere.Width = 130;
             // 
             // btn_Afficher
             // 
@@ -110,11 +98,26 @@
             this.btn_Nouveau.UseVisualStyleBackColor = true;
             this.btn_Nouveau.Click += new System.EventHandler(this.btn_Nouveau_Click);
             // 
+            // id_matiere
+            // 
+            this.id_matiere.DataPropertyName = "id_matiere";
+            this.id_matiere.HeaderText = "Identifiant";
+            this.id_matiere.Name = "id_matiere";
+            this.id_matiere.ReadOnly = true;
+            // 
+            // Matiere
+            // 
+            this.Matiere.DataPropertyName = "Nom";
+            this.Matiere.HeaderText = "Matière";
+            this.Matiere.Name = "Matiere";
+            this.Matiere.ReadOnly = true;
+            this.Matiere.Width = 150;
+            // 
             // Form_ListeMatieres
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(474, 276);
+            this.ClientSize = new System.Drawing.Size(474, 272);
             this.Controls.Add(this.btn_Nouveau);
             this.Controls.Add(this.btn_Supprimer);
             this.Controls.Add(this.btn_Modifier);
@@ -131,12 +134,12 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgv_ListeMatieres;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_matiere;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Matiere;
         private System.Windows.Forms.Button btn_Afficher;
         private System.Windows.Forms.Button btn_Modifier;
         private System.Windows.Forms.Button btn_Supprimer;
         private System.Windows.Forms.Button btn_Nouveau;
         private System.Windows.Forms.BindingSource bs;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_matiere;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Matiere;
     }
 }
